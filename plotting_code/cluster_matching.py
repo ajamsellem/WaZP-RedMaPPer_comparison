@@ -31,14 +31,13 @@ z_u = data_u.field('zp')
 rich_u = data_u.field('NGals')
 drich_u = data_u.field('ngals_err')
 
-
 # Create an array of tuples of the form (ra, dec) for each data set
 data = list(zip(ra, dec))
 data_u = list(zip(ra_u, dec_u))
 data = np.array(data)
 data_u = np.array(data_u)
 
-# Create an array of tuples of the form (ra, dec) where the two data sets have equal (ra, dec) tuples
+# Find where the the two data sets have equal (ra, dec) tuples and create an array of these tuples
 aset = set([tuple(x) for x in data])
 bset = set([tuple(x) for x in data_u])
 ra_dec = np.array([x for x in aset & bset])
