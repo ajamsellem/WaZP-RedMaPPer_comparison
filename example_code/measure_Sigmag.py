@@ -10,7 +10,7 @@ import treecorr
 
 # setting up config file and correlator for treecorr
 config_file = 'default.params'
-config = treecorr.config.read_config(config_file)
+config = treecorr.config.read_config(config_file)               # So I don't need this file with default parameters? What are the parameters?
 
 zmin = float(sys.argv[1])
 zmax = float(sys.argv[2])
