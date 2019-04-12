@@ -14,7 +14,7 @@ config = treecorr.config.read_config(config_file)               # So I don't nee
 
 zmin = float(sys.argv[1])
 zmax = float(sys.argv[2])
-Nz = int(sys.argv[3])
+Nz = int(sys.argv[3])                           # Does this just determine the histogram binning?
 Maglim1 = float(sys.argv[4])
 Maglim2 = float(sys.argv[5])
 lambmin = float(sys.argv[6])
@@ -26,14 +26,14 @@ randoms = pf.open(sys.argv[9])[1].data
 galaxies = pf.open(sys.argv[10])[1].data
 galaxy_randoms = pf.open(sys.argv[11])[1].data
 jkid = int(sys.argv[12])
-tot_area = float(sys.argv[13])
+tot_area = float(sys.argv[13])              # Total area of all clusters?
 outfile = sys.argv[14]
-nR = int(sys.argv[15])
+nR = int(sys.argv[15])                      # ???
 i = int(sys.argv[16])
 
 # read and mask JK sub-sample
-JK = clusters['JK']
-mask = (JK!=jkid)*(clusters['Z']>=zmin)*(clusters['Z']<zmax)*(clusters['LAMBDA']>=lambmin)*(clusters['LAMBDA']<lambmax)
+JK = clusters['JK']                                 # What's JK?
+mask = (JK!=jkid)*(clusters['Z']>=zmin)*(clusters['Z']<zmax)*(clusters['LAMBDA']>=lambmin)*(clusters['LAMBDA']<lambmax)         # Values of True in the mask will go into the fiduciary sample
 RA = clusters['RA'][mask]
 DEC = clusters['DEC'][mask]
 Z = clusters['Z'][mask]
@@ -44,14 +44,14 @@ mask = (JK_ran!=jkid)*(randoms['Z']>=zmin)*(randoms['Z']<zmax)*(randoms['LAMBDA'
 RA_ran = randoms['RA'][mask]
 DEC_ran = randoms['DEC'][mask]
 Z_ran = randoms['Z'][mask]
-W_ran = randoms['W'][mask]
+W_ran = randoms['W'][mask]                          # What's 'W'? Is it some measure of richness?
 
 JK_gal = galaxies['JK']
 mask = (JK_gal!=jkid)
 ra = galaxies['RA'][mask]
 dec = galaxies['DEC'][mask]
-# CCCCCCCCC
-mag = galaxies['MAG_AUTO_I'][mask]
+# CCCCCCCCC                                         # What's this line mean?
+mag = galaxies['MAG_AUTO_I'][mask]                  # Magnitude of brightness?
 #mag = galaxies['MAG_I'][mask]
 
 JK_gal_ran = galaxy_randoms['JK']
@@ -71,7 +71,7 @@ n1 = np.histogram(Z, range=(zmin,zmax), bins=Nz)
 zmid = (n1[1][1:]+n1[1][:-1])/2
 
 # calculate area
-area = tot_area*(N_jkgal*1.0/N_allgal)
+area = tot_area*(N_jkgal*1.0/N_allgal)              # Confused. Probably b/c I don't know what tot_area is
 print("area:", area)
 
 # Measurement parameters
@@ -86,7 +86,7 @@ bslop = 0.03
 # treecorr    
 print("bin:", i, "mean z:", zmid[i])    
 
-mask = (Z>=n1[1][i])*(Z<n1[1][i+1])
+mask = (Z>=n1[1][i])*(Z<n1[1][i+1])                     # Didn't we already use mask?
 mask_ran = (Z_ran>=n1[1][i])*(Z_ran<n1[1][i+1])
     
 z_cen_bin = Z[mask]
@@ -125,7 +125,7 @@ print(len(ra_ran))
 #else:
 
 # CCCCCCCCC
-ra_gal_ran_temp = ra_ran[:7*len(ra_gal_bin)] #[ids_ran[:15256808*3]] #70000000]]
+ra_gal_ran_temp = ra_ran[:7*len(ra_gal_bin)] #[ids_ran[:15256808*3]] #70000000]]   # Why 7? Is this Nz?
 dec_gal_ran_temp = dec_ran[:7*len(ra_gal_bin)] #[ids_ran[:15256808*3]] #70000000]]
 print(len(ra_gal_ran_temp))
 #ids_ran = 0
